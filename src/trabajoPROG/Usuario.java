@@ -10,6 +10,14 @@ public class Usuario {
 
     public Usuario() {
     }
+    public Usuario(String nombre, String dni, int cPost, int fechaN, String correo, int tlf) {
+        this.nombre = nombre;
+        this.dni = dni;
+        this.cPost = cPost;
+        this.fechaN = fechaN;
+        this.correo = correo;
+        this.tlf = tlf;
+    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
