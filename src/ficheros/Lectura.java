@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Lectura {
-
+    //cd
     public static void vertirFicheroEnArrayList(ArrayList<Usuario> usuarios, File fich) throws FileNotFoundException {
         usuarios.clear();
         Scanner scan = new Scanner(fich);
