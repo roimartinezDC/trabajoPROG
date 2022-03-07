@@ -17,24 +17,69 @@ public class Escritura {
             }
             Lectura.vertirFicheroEnArrayList(usuarios, fich);
 
-            //pedir Nombre
-            String nombre = Llamar.lerString("Nombre:");
+            //String nombre = Llamar.lerString("Nombre:");
 
-            //pedir DNI
-            String dni = pedirDNI();
+            //String dni = pedirDNI();
 
-            //pedir cPostal
-            int cPostal = pedircPostal();
+            //int cPostal = pedircPostal();
 
-            //pedir fech. nacimiento
-            String fNac = pedirFNac();
-            System.out.println(fNac);
+            //String fNac = pedirFNac();
+
+            String correo;
+            correo = pedirCorreo();
+
 
         } catch (FileNotFoundException ex) {
             System.out.println("error1.1: "+ex.toString());
         } catch (IOException e) {
             System.out.println("error1.2: "+e.toString());
         }
+    }
+    private String pedirCorreo() {
+        String correo = null;
+        while (correo == null) {
+            correo = Llamar.lerString("Correo electrónico:");
+            if (correo.contains("@")) {
+                //validar que no tiene más de 1 "@"
+                int contA = 0;
+                for (int i = 0; i < correo.length(); i++) {
+                    if (correo.charAt(i) == '@') {
+                        contA++;
+                    }
+                }
+                if (contA == 1) {
+                    // continuación de las validaciones
+                    String[] lista = correo.split("@");
+                    //validar que el dominio no tiene más de un punto
+                    int contP = 0;
+                    for (int i = 0; i < lista[1].length(); i++) {
+                        if (lista[1].charAt(i) == '.') {
+                            contP++;
+                        }
+                    }
+                    if (contP == 1) {
+                        //continuacion de las validaciones
+                        String[] dominio = lista[1].split("\\.");
+                        //validar el tipo
+                        if (dominio[1].equals("es") || dominio[1].equals("com") || dominio[1].equals("org")) {
+                        }else {
+                            System.out.println("Tipo del dominio erróneo");
+                            correo = null;
+                        }
+                    } else {
+                        System.out.println("Formato del dominio incorrecto");
+                        correo = null;
+                    }
+                } else {
+                    System.out.println("Formato del correo incorrecto");
+                    correo = null;
+                }
+            }else {
+                System.out.println("Formato del correo incorrecto");
+                correo = null;
+            }
+        }
+        return correo;
     }
     private String pedirFNac() {
         int mes = 0;
