@@ -2,6 +2,7 @@ package ficheros;
 
 import trabajoPROG.Usuario;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -40,4 +41,26 @@ public class Lectura {
             System.out.println("erro (Ficheiro non atopado)");
         }
     }
+
+    public void buscar(ArrayList<Usuario> usuarios, File nomeFicheiro){
+        int opcion;
+        do {
+            opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU \n1.Nombre  \n2.DNI \n3.Codigo postal \n4.Correo \n5.Telefono \n6.Fecha nacimiento  "));
+            switch (opcion) {
+
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+
+                case 5:
+
+
+            }
+
+
+        } while (opcion < 5);
+    }
 }
+
+
