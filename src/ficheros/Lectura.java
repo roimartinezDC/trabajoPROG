@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Lectura {
-    Scanner scan;
+
     public static void vertirFicheroEnArrayList(ArrayList<Usuario> usuarios, File fich) throws FileNotFoundException {
         usuarios.clear();
         Scanner scan = new Scanner(fich);
@@ -38,20 +38,20 @@ public class Lectura {
             }
 
         } catch (FileNotFoundException ex) {
-            System.out.println("erro (Ficheiro non atopado)");
+            System.out.println("erro (Ficheiro non atopado)"+ ex.toString());
         }
     }
 
     public void buscar(ArrayList<Usuario> usuarios, File nombreFichero) {
         int opcion;
-        String nombre=null;
+        String nombre = null;
         do {
-            opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU \n1.Modificar  \n2.Ordenar de mayor a menor  "));
+            opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU \n1.Modificar  \n2.Ordenar de mayor a menor \3.Eliminar "));
             switch (opcion) {
 
-                case 1:Lectura.modificar(usuarios,nombreFichero,nombre);
+                case 1:Lectura.modificar(usuarios,nombreFichero);
                 case 2:
-                case 3:
+                case 3:Lectura.eliminar(usuarios, nombreFichero);
                 case 4:
 
                 case 5:
@@ -63,10 +63,10 @@ public class Lectura {
         } while (opcion < 5);
     }
 
-    public static void modificar(ArrayList<Usuario> usuarios, File nombreFichero, String nombre) {
+    public static void modificar(ArrayList<Usuario> usuarios, File nombreFichero) {
         try {
             Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
-            nombre = Llamar.lerString("Introduzca nombre a modificar");
+            String nombre = Llamar.lerString("Introduzca nombre a modificar");
             boolean encontrado = false;
             for (int i = 0; i < usuarios.size(); i++) {
                 if (usuarios.get(i).getNombre().equals(nombre)) {
@@ -84,12 +84,32 @@ public class Lectura {
                                 usuarios.get(i).setcPost(nuevo_Telefono);
                         }
                     } while (opcion < 3);
+                }else {
+                    JOptionPane.showMessageDialog(null,"No se encuentra el nombre");
                 }
 
 
             }
         } catch (FileNotFoundException e) {
-            System.out.println("error (fichero non encontrado)");
+            System.out.println("error (fichero no encontrado)"+e.toString());
+        }
+    }
+
+
+    public static void eliminar(ArrayList<Usuario> usuarios, File nombreFichero){
+        try{
+            Lectura.vertirFicheroEnArrayList(usuarios,nombreFichero);
+            String nom=Llamar.lerString("¿Que elemento desea eliminar?");
+            for(int i=0;i<usuarios.size();i++) {
+                if (usuarios.get(i).getNombre().equals(nom)) {
+                    usuarios.remove(i);
+                    i=1-1;
+                }else{
+                    System.out.println("este elemento no existe ");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("fichero no encontrado"+ e.toString());
         }
     }
 }
