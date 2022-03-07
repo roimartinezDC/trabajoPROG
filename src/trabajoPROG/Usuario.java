@@ -19,16 +19,10 @@ public class Usuario {
         this.tlf = tlf;
     }
 
-
-
-    public void setNombre(String nombre) {this.nombre = nombre;}
     public String getNombre() {
         return nombre;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
     public String getDni() {
         return dni;
     }
@@ -42,9 +36,6 @@ public class Usuario {
 
     public String getFechaN() {
         return fechaN;
-    }
-    public void setFechaN(String fechaN) {
-        this.fechaN = fechaN;
     }
 
     public String getCorreo() {

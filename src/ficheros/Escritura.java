@@ -418,7 +418,7 @@ public class Escritura {
                                 case 2:int nuevo_CodigoPostal=Llamar.lerInt("Introduzca el nuevo codigo postal");
                                     usuarios.get(i).setcPost(nuevo_CodigoPostal);
                                 case 3:int nuevo_Telefono=Llamar.lerInt("Introduzca el nuevo telefono");
-                                    usuarios.get(i).setcPost(nuevo_Telefono);
+                                    usuarios.get(i).setTlf(nuevo_Telefono);
                             }
                         } while (opcion < 3);
                     }else {
