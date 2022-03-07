@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 public class Lectura {
     Scanner scan;
-
     public static void vertirFicheroEnArrayList(ArrayList<Usuario> usuarios, File fich) throws FileNotFoundException {
         usuarios.clear();
         Scanner scan = new Scanner(fich);
@@ -24,7 +23,7 @@ public class Lectura {
         scan.close();
     }
 
-    public void visulizar(ArrayList<Usuario> usuarios, File nomeFicheiro) {
+    public void visualizar(ArrayList<Usuario> usuarios, File nomeFicheiro) {
         try {
             Lectura.vertirFicheroEnArrayList(usuarios, nomeFicheiro);
             for (int i = 0; i < usuarios.size(); i++) {
