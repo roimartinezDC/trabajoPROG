@@ -42,13 +42,20 @@ public class Lectura {
         }
     }
 
-    public void buscar(ArrayList<Usuario> usuarios, File nombreFichero) {
-        int opcion;
+    public void buscar(ArrayList<Usuario> usuarios, File nombreFichero) throws FileNotFoundException {
+        vertirFicheroEnArrayList(usuarios, nombreFichero);
         String DNI= Llamar.lerString("DNI a buscar");
-        do {
-            opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU \n1.Modificar  \n2.Eliminar "));
+        boolean encontrado = false;
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getDni().equals(DNI)) {
+                encontrado = true;
+                break;
+            }
+        }
+        if (encontrado == true) {
+            int opcion;
+            opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU \n1. Modificar  \n2. Eliminar \n3. Atrás"));
             switch (opcion) {
-
                 case 1:Escritura.modificar(usuarios,nombreFichero,DNI);
                     break;
                 case 2: Escritura.eliminar(usuarios, nombreFichero,DNI);
@@ -56,9 +63,10 @@ public class Lectura {
                 default:
                     break;
             }
+        } else {
+            System.out.println("Usuario no encontrado");
+        }
 
-
-        } while (opcion < 3);
     }
 
 

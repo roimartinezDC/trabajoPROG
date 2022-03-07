@@ -36,7 +36,55 @@ public class Escritura {
             pw.close();
         }
     }
-    private int pedirTlf() {
+
+    public static void eliminar(ArrayList<Usuario> usuarios, File nombreFichero,String DNI) {
+        try {
+            Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
+
+            for (int i = 0; i < usuarios.size(); i++) {
+                if (usuarios.get(i).getDni().equals(DNI)) {
+                    usuarios.remove(i);
+                    i = i - 1;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("fichero no encontrado" + e.toString());
+        }
+    }
+
+    public static void modificar(ArrayList<Usuario> usuarios, File nombreFichero, String DNI) {
+        try {
+            Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
+            for (int i = 0; i < usuarios.size(); i++) {
+                if (usuarios.get(i).getDni().equals(DNI)) {
+                    int opcion;
+                    opcion = Llamar.lerInt("MENU \n1.Correo \n2.Codigo postal \n3.Telefono \n4. Atrás");
+                    switch (opcion) {
+                        case 1:
+                            String nuevo_Correo = pedirCorreo();
+                            usuarios.get(i).setCorreo(nuevo_Correo);
+                            break;
+                        case 2:
+                            int nuevo_CodigoPostal = pedircPostal();
+                            usuarios.get(i).setcPost(nuevo_CodigoPostal);
+                            break;
+                        case 3:
+                            int nuevo_Telefono = pedirTlf();
+                            usuarios.get(i).setTlf(nuevo_Telefono);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("error (fichero no encontrado)"+e.toString());
+        }
+    }
+
+    private static int pedirTlf() {
         String tlf = null;
         while (tlf == null) {
             try {
@@ -65,7 +113,7 @@ public class Escritura {
         }
         return Integer.parseInt(tlf);
     }
-    private String pedirCorreo() {
+    private static String pedirCorreo() {
         String correo = null;
         while (correo == null) {
             correo = Llamar.lerString("Correo electrónico:");
@@ -195,7 +243,7 @@ public class Escritura {
         String fecha = dia+"/"+mes+"/"+anho;
         return fecha;
     }
-    private int pedircPostal() {
+    private static int pedircPostal() {
         int cPostal = 0;
         while (cPostal == 0) {
             try {
@@ -381,59 +429,4 @@ public class Escritura {
         }
         return dni;
     }
-
-    public static void eliminar(ArrayList<Usuario> usuarios, File nombreFichero,String DNI) {
-        try {
-            Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
-
-            for (int i = 0; i < usuarios.size(); i++) {
-                if (usuarios.get(i).getDni().equals(DNI)) {
-                    usuarios.remove(i);
-                    i = i - 1;
-                } else {
-                    System.out.println("este elemento no existe ");
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("fichero no encontrado" + e.toString());
-        }
-    }
-
-
-        public static void modificar(ArrayList<Usuario> usuarios, File nombreFichero, String DNI) {
-            try {
-                Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
-                boolean encontrado = false;
-                for (int i = 0; i < usuarios.size(); i++) {
-                    if (usuarios.get(i).getDni().equals(DNI)) {
-                        encontrado = true;
-                        int opcion;
-                        do {
-                            opcion = Llamar.lerInt("MENU \n1.correo \n2.Codigo postal \n3.Telefono");
-
-                            switch (opcion) {
-                                case 1:String nuevo_Correo=Llamar.lerString("Introduzca el nuevo correo");
-                                    usuarios.get(i).setCorreo(nuevo_Correo);
-                                         break;
-                                case 2:int nuevo_CodigoPostal=Llamar.lerInt("Introduzca el nuevo codigo postal");
-                                    usuarios.get(i).setcPost(nuevo_CodigoPostal);
-                                        break;
-                                case 3:int nuevo_Telefono=Llamar.lerInt("Introduzca el nuevo telefono");
-                                    usuarios.get(i).setTlf(nuevo_Telefono);
-                                        break;
-                                default:
-                                    break;
-                            }
-                        } while (opcion < 3);
-                    }else {
-                        JOptionPane.showMessageDialog(null,"No se encuentra el nombre");
-                    }
-
-
-                }
-            } catch (FileNotFoundException e) {
-                System.out.println("error (fichero no encontrado)"+e.toString());
-            }
-        }
-
     }
