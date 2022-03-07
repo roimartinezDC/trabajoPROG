@@ -16,7 +16,7 @@ public class Main {
         File fich = new File(".\\fichero.txt");
         int opcion;
         do {
-            opcion = Integer.parseInt(JOptionPane.showInputDialog("GESTOR DE USUARIOS \n1.Añadir Novo Usuario  \n2.Amosar Usuarios \n3.Eliminar Usuarios \n4.Buscar por parametro  \n5.Salir"));
+            opcion = Integer.parseInt(JOptionPane.showInputDialog("GESTOR DE USUARIOS \n1.Añadir Novo Usuario  \n2.Amosar Usuarios \n3.Buscar usuarios \n4.Salir"));
             switch (opcion) {
 
                 case 1:
@@ -29,12 +29,11 @@ public class Main {
                     break;
                 case 4:
                     break;
-                case 5:
-                    break;
+
             }
 
 
-        } while (opcion < 5);
+        } while (opcion < 4);
     }
 
 

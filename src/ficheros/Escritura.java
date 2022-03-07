@@ -382,12 +382,12 @@ public class Escritura {
         return dni;
     }
 
-    public static void eliminar(ArrayList<Usuario> usuarios, File nombreFichero) {
+    public static void eliminar(ArrayList<Usuario> usuarios, File nombreFichero,String DNI) {
         try {
             Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
-            String nom = Llamar.lerString("¿Que elemento desea eliminar?");
+
             for (int i = 0; i < usuarios.size(); i++) {
-                if (usuarios.get(i).getNombre().equals(nom)) {
+                if (usuarios.get(i).getDni().equals(DNI)) {
                     usuarios.remove(i);
                     i = i - 1;
                 } else {
@@ -400,25 +400,29 @@ public class Escritura {
     }
 
 
-        public static void modificar(ArrayList<Usuario> usuarios, File nombreFichero) {
+        public static void modificar(ArrayList<Usuario> usuarios, File nombreFichero, String DNI) {
             try {
                 Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
-                String nombre = Llamar.lerString("Introduzca nombre a modificar");
                 boolean encontrado = false;
                 for (int i = 0; i < usuarios.size(); i++) {
-                    if (usuarios.get(i).getNombre().equals(nombre)) {
+                    if (usuarios.get(i).getDni().equals(DNI)) {
                         encontrado = true;
                         int opcion;
                         do {
                             opcion = Llamar.lerInt("MENU \n1.correo \n2.Codigo postal \n3.Telefono");
-                            String mod = Llamar.lerString("¿Que elemento desea modificar");
+
                             switch (opcion) {
                                 case 1:String nuevo_Correo=Llamar.lerString("Introduzca el nuevo correo");
                                     usuarios.get(i).setCorreo(nuevo_Correo);
+                                         break;
                                 case 2:int nuevo_CodigoPostal=Llamar.lerInt("Introduzca el nuevo codigo postal");
                                     usuarios.get(i).setcPost(nuevo_CodigoPostal);
+                                        break;
                                 case 3:int nuevo_Telefono=Llamar.lerInt("Introduzca el nuevo telefono");
                                     usuarios.get(i).setTlf(nuevo_Telefono);
+                                        break;
+                                default:
+                                    break;
                             }
                         } while (opcion < 3);
                     }else {

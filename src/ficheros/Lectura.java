@@ -1,5 +1,6 @@
 package ficheros;
 
+import libreriaroiyago.Llamar;
 import trabajoPROG.Usuario;
 
 import javax.swing.*;
@@ -43,23 +44,21 @@ public class Lectura {
 
     public void buscar(ArrayList<Usuario> usuarios, File nombreFichero) {
         int opcion;
-        String nombre = null;
+        String DNI= Llamar.lerString("DNI a buscar");
         do {
-            opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU \n1.Modificar  \n2.Ordenar de mayor a menor \3.Eliminar "));
+            opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU \n1.Modificar  \n2.Eliminar "));
             switch (opcion) {
 
-                case 1:Escritura.modificar(usuarios,nombreFichero);
-                case 2:
-                case 3:Escritura.eliminar(usuarios, nombreFichero);
-                case 4:
-
-                case 5:
-
-
+                case 1:Escritura.modificar(usuarios,nombreFichero,DNI);
+                    break;
+                case 2: Escritura.eliminar(usuarios, nombreFichero,DNI);
+                    break;
+                default:
+                    break;
             }
 
 
-        } while (opcion < 5);
+        } while (opcion < 3);
     }
 
 
