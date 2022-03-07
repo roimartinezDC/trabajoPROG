@@ -1,5 +1,6 @@
 package ficheros;
 
+import libreriaroiyago.Llamar;
 import trabajoPROG.Usuario;
 
 import javax.swing.*;
@@ -42,13 +43,14 @@ public class Lectura {
         }
     }
 
-    public void buscar(ArrayList<Usuario> usuarios, File nomeFicheiro){
+    public void buscar(ArrayList<Usuario> usuarios, File nombreFichero) {
         int opcion;
+        String nombre=null;
         do {
-            opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU \n1.Nombre  \n2.DNI \n3.Codigo postal \n4.Correo \n5.Telefono \n6.Fecha nacimiento  "));
+            opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU \n1.Modificar  \n2.Ordenar de mayor a menor  "));
             switch (opcion) {
 
-                case 1:
+                case 1:Lectura.modificar(usuarios,nombreFichero,nombre);
                 case 2:
                 case 3:
                 case 4:
@@ -61,6 +63,37 @@ public class Lectura {
 
         } while (opcion < 5);
     }
+
+    public static void modificar(ArrayList<Usuario> usuarios, File nombreFichero, String nombre) {
+        try {
+            Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
+            nombre = Llamar.lerString("Introduzca nombre a modificar");
+            boolean encontrado = false;
+            for (int i = 0; i < usuarios.size(); i++) {
+                if (usuarios.get(i).getNombre().equals(nombre)) {
+                    encontrado = true;
+                    int opcion;
+                    do {
+                        opcion = Llamar.lerInt("MENU \n1.correo \n2.Codigo postal \n3.Telefono");
+                        String mod = Llamar.lerString("¿Que elemento desea modificar");
+                        switch (opcion) {
+                            case 1:String nuevo_Correo=Llamar.lerString("Introduzca el nuevo correo");
+                            usuarios.get(i).setCorreo(nuevo_Correo);
+                            case 2:int nuevo_CodigoPostal=Llamar.lerInt("Introduzca el nuevo codigo postal");
+                            usuarios.get(i).setcPost(nuevo_CodigoPostal);
+                            case 3:int nuevo_Telefono=Llamar.lerInt("Introduzca el nuevo telefono");
+                                usuarios.get(i).setcPost(nuevo_Telefono);
+                        }
+                    } while (opcion < 3);
+                }
+
+
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("error (fichero non encontrado)");
+        }
+    }
 }
+
 
 

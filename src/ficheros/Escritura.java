@@ -18,13 +18,13 @@ public class Escritura {
             Lectura.vertirFicheroEnArrayList(usuarios, fich);
 
             //pedir Nombre
-            //String nombre = Llamar.lerString("Nombre:");
+            String nombre = Llamar.lerString("Nombre:");
 
             //pedir DNI
-            //String dni = pedirDNI();
+            String dni = pedirDNI();
 
             //pedir cPostal
-            //int cPostal = pedircPostal();
+            int cPostal = pedircPostal();
 
             //pedir fech. nacimiento
             String fNac = pedirFNac();
@@ -90,15 +90,22 @@ public class Escritura {
                         }
                         break;
                     case 2:
-                        if ((anho % 100)==0 && (anho % 400)==0) {
+                        if ((anho % 4)==0 && (anho % 100)!=0) {
                             if (dia < 1 || dia > 29) {
                                 System.out.println("Día incorrecto");
                                 dia = 0;
                             }
                         } else {
-                            if (dia < 1 || dia > 28) {
-                                System.out.println("Día incorrecto");
-                                dia = 0;
+                            if ((anho % 100)==0 && (anho % 400)==0) {
+                                if (dia < 1 || dia > 29) {
+                                    System.out.println("Día incorrecto");
+                                    dia = 0;
+                                }
+                            } else {
+                                if (dia < 1 || dia > 28) {
+                                    System.out.println("Día incorrecto");
+                                    dia = 0;
+                                }
                             }
                         }
                         break;
