@@ -25,9 +25,9 @@ public class Main {
                 case 2:
                     lector.visualizar(usuarios, fich);
                     break;
-                case 3:
+                case 3:lector.buscar(usuarios,fich);
                     break;
-                case 4:lector.buscar(usuarios,fich);
+                case 4:
                     break;
                 case 5:
                     break;
