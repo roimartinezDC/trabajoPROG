@@ -90,15 +90,22 @@ public class Escritura {
                         }
                         break;
                     case 2:
-                        if ((anho % 100)==0 && (anho % 400)==0) {
+                        if ((anho % 4)==0 && (anho % 100)!=0) {
                             if (dia < 1 || dia > 29) {
                                 System.out.println("Día incorrecto");
                                 dia = 0;
                             }
                         } else {
-                            if (dia < 1 || dia > 28) {
-                                System.out.println("Día incorrecto");
-                                dia = 0;
+                            if ((anho % 100)==0 && (anho % 400)==0) {
+                                if (dia < 1 || dia > 29) {
+                                    System.out.println("Día incorrecto");
+                                    dia = 0;
+                                }
+                            } else {
+                                if (dia < 1 || dia > 28) {
+                                    System.out.println("Día incorrecto");
+                                    dia = 0;
+                                }
                             }
                         }
                         break;
