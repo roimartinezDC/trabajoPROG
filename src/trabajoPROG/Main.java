@@ -5,10 +5,11 @@ import ficheros.Lectura;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Escritura escritor = new Escritura();
         Lectura lector=new Lectura();
         ArrayList<Usuario> usuarios = new ArrayList<>();

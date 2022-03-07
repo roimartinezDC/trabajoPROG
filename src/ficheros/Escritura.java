@@ -7,13 +7,10 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Escritura {
-    BufferedWriter bw;
-    public void añadirUsuario(ArrayList<Usuario> usuarios, File fich) {
+    PrintWriter pw;
+    FileWriter fw;
+    public void añadirUsuario(ArrayList<Usuario> usuarios, File fich) throws IOException {
         try {
-            while (!fich.exists()) {
-                bw = new BufferedWriter(new FileWriter(fich));
-                bw.close();
-            }
             Lectura.vertirFicheroEnArrayList(usuarios, fich);
 
             String nombre = Llamar.lerString("Nombre:");
@@ -25,17 +22,17 @@ public class Escritura {
 
             usuarios.add(new Usuario(nombre, dni, cPostal, fNac, correo, tlf));
 
-
-            bw = new BufferedWriter(new FileWriter(fich));
+            fw = new FileWriter(fich, true);
+            pw = new PrintWriter(fw);
             for (int i = 0; i < usuarios.size(); i++) {
-                System.out.println(usuarios.get(i).getNombre());
-                bw.write(usuarios.get(i).getNombre()+","+usuarios.get(i).getDni()+","+usuarios.get(i).getcPost()+","+usuarios.get(i).getFechaN()+","+usuarios.get(i).getCorreo()+","+usuarios.get(i).getTlf()+"\n");
+                pw.println(usuarios.get(i).getNombre()+","+usuarios.get(i).getDni()+","+usuarios.get(i).getcPost()+","+usuarios.get(i).getFechaN()+","+usuarios.get(i).getCorreo()+","+usuarios.get(i).getTlf());
             }
 
         } catch (FileNotFoundException ex) {
             System.out.println("error1.1: "+ex.toString());
-        } catch (IOException e) {
-            System.out.println("error1.2: "+e.toString());
+        } finally {
+            fw.close();
+            pw.close();
         }
     }
     private int pedirTlf() {
