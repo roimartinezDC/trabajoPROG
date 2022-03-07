@@ -22,6 +22,7 @@ public class Main {
                     escritor.añadirUsuario(usuarios, fich);
                     break;
                 case 2:
+                    lector.visualizar(usuarios, fich);
                     break;
                 case 3:
                     break;

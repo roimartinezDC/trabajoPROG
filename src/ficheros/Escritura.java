@@ -7,7 +7,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Escritura {
-
     BufferedWriter bw;
     public void añadirUsuario(ArrayList<Usuario> usuarios, File fich) {
         try {
@@ -17,23 +16,56 @@ public class Escritura {
             }
             Lectura.vertirFicheroEnArrayList(usuarios, fich);
 
-            //String nombre = Llamar.lerString("Nombre:");
+            String nombre = Llamar.lerString("Nombre:");
+            String dni = pedirDNI();
+            int cPostal = pedircPostal();
+            String fNac = pedirFNac();
+            String correo = pedirCorreo();
+            int tlf = pedirTlf();
 
-            //String dni = pedirDNI();
+            usuarios.add(new Usuario(nombre, dni, cPostal, fNac, correo, tlf));
 
-            //int cPostal = pedircPostal();
 
-            //String fNac = pedirFNac();
-
-            String correo;
-            correo = pedirCorreo();
-
+            bw = new BufferedWriter(new FileWriter(fich));
+            for (int i = 0; i < usuarios.size(); i++) {
+                System.out.println(usuarios.get(i).getNombre());
+                bw.write(usuarios.get(i).getNombre()+","+usuarios.get(i).getDni()+","+usuarios.get(i).getcPost()+","+usuarios.get(i).getFechaN()+","+usuarios.get(i).getCorreo()+","+usuarios.get(i).getTlf()+"\n");
+            }
 
         } catch (FileNotFoundException ex) {
             System.out.println("error1.1: "+ex.toString());
         } catch (IOException e) {
             System.out.println("error1.2: "+e.toString());
         }
+    }
+    private int pedirTlf() {
+        String tlf = null;
+        while (tlf == null) {
+            try {
+                tlf = String.valueOf(Llamar.lerString("Nº de teléfono (opcional) \nPulsar enter para omitir"));
+                int ntlf = Integer.parseInt(tlf);
+                if (tlf.length() == 9) {
+                    if (tlf.startsWith("6") || tlf.startsWith("9")) {
+                    } else {
+                        System.out.println("Formato del nª de teléfono erróneo");
+                        tlf = null;
+                    }
+                } else {
+                    System.out.println("Tamaño del nº de teléfono incorrecto");
+                    tlf = null;
+                }
+            } catch (NumberFormatException ex) {
+                if (tlf.equals("")) {
+                    tlf = "0";
+                    break;
+                }else {
+                    System.out.println("Formato incorrecto");
+                    tlf=null;
+                }
+            }
+
+        }
+        return Integer.parseInt(tlf);
     }
     private String pedirCorreo() {
         String correo = null;
@@ -352,13 +384,4 @@ public class Escritura {
         return dni;
     }
 
-
-    public static void escribirArrayListEnFichero(ArrayList<Usuario> usuarios, File fich) throws IOException {
-        if (fich.exists()) {
-            BufferedWriter bw2 = new BufferedWriter(new FileWriter(fich));
-            for (int i = 0; i < usuarios.size(); i++) {
-                bw2.write(usuarios.get(i).getNombre()+","+usuarios.get(i).getDni()+","+usuarios.get(i).getcPost()+","+usuarios.get(i).getFechaN()+","+usuarios.get(i).getCorreo()+","+usuarios.get(i).getTlf());
-            }
-        }
-    }
 }
