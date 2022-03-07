@@ -17,7 +17,7 @@ public class Lectura {
         while (scan.hasNextLine()) {
             str = scan.nextLine();
             String[] lista = str.split(",");
-            usuarios.add(new Usuario(lista[0], lista[1], Integer.parseInt(lista[2]), Integer.parseInt(lista[3]), lista[4], Integer.parseInt(lista[5])));
+            usuarios.add(new Usuario(lista[0], lista[1], Integer.parseInt(lista[2]), lista[3], lista[4], Integer.parseInt(lista[5])));
         }
         scan.close();
     }

@@ -1,4 +1,312 @@
 package ficheros;
 
+import libreriaroiyago.Llamar;
+import trabajoPROG.Usuario;
+
+import java.io.*;
+import java.util.ArrayList;
+
 public class Escritura {
+
+    BufferedWriter bw;
+    public void añadirUsuario(ArrayList<Usuario> usuarios, File fich) {
+        try {
+            while (!fich.exists()) {
+                bw = new BufferedWriter(new FileWriter(fich));
+                bw.close();
+            }
+            Lectura.vertirFicheroEnArrayList(usuarios, fich);
+
+            //pedir Nombre
+            //String nombre = Llamar.lerString("Nombre:");
+
+            //pedir DNI
+            //String dni = pedirDNI();
+
+            //pedir cPostal
+            //int cPostal = pedircPostal();
+
+            //pedir fech. nacimiento
+            String fNac = pedirFNac();
+            System.out.println(fNac);
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("error1.1: "+ex.toString());
+        } catch (IOException e) {
+            System.out.println("error1.2: "+e.toString());
+        }
+    }
+    private String pedirFNac() {
+        int mes = 0;
+        while (mes == 0) {
+            try {
+                mes = Llamar.lerInt("Fecha de nacimiento\nMes:");
+                if (mes < 1 || mes > 12) {
+                    System.out.println("Mes inválido");
+                    mes = 0;
+                }
+            } catch (NumberFormatException ex) {
+                System.out.println("El formato debe ser numérico");
+                mes = 0;
+            }
+        }
+        int anho = 0;
+        while (anho == 0) {
+            try {
+                anho = Llamar.lerInt("Fecha de nacimiento\nAño:");
+                if (anho < 1910 || anho > 2050) {
+                    System.out.println("Año fuera del límite permitido");
+                    anho = 0;
+                }
+            } catch (NumberFormatException ex) {
+                System.out.println("El formato debe de ser numérico");
+                anho = 0;
+            }
+        }
+        int dia = 0;
+        while (dia == 0) {
+            try {
+                dia = Llamar.lerInt("Fecha de nacimiento\nDía:");
+                switch (mes) {
+                    case 1:
+                    case 3:
+                    case 5:
+                    case 7:
+                    case 8:
+                    case 10:
+                    case 12:
+                        if (dia < 1 || dia > 31) {
+                            System.out.println("Día incorrecto");
+                            dia = 0;
+                        }
+                        break;
+                    case 4:
+                    case 6:
+                    case 9:
+                    case 11:
+                        if (dia < 1 || dia > 30) {
+                            System.out.println("Día incorrecto");
+                            dia = 0;
+                        }
+                        break;
+                    case 2:
+                        if ((anho % 100)==0 && (anho % 400)==0) {
+                            if (dia < 1 || dia > 29) {
+                                System.out.println("Día incorrecto");
+                                dia = 0;
+                            }
+                        } else {
+                            if (dia < 1 || dia > 28) {
+                                System.out.println("Día incorrecto");
+                                dia = 0;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            } catch (NumberFormatException ex) {
+                System.out.println("El formato debe de ser numérico");
+            }
+        }
+
+        String fecha = dia+"/"+mes+"/"+anho;
+        return fecha;
+    }
+    private int pedircPostal() {
+        int cPostal = 0;
+        while (cPostal == 0) {
+            try {
+                cPostal = Llamar.lerInt("Código Postal:");
+                if (String.valueOf(cPostal).length() != 5) {
+                    System.out.println("Tamaño del c.postal incorrecto");
+                    cPostal = 0;
+                }
+            } catch (NumberFormatException nfex) {
+                System.out.println("Formato del c.postal erróneo");
+                cPostal = 0;
+            }
+        }
+        return cPostal;
+    }
+    private String pedirDNI() {
+        String dni = null;
+        while (dni == null) {
+            dni = Llamar.lerString("DNI:");
+            if (dni.length() == 9) {
+                String numerosStr = dni.substring(0, 8);
+                String letra = dni.substring(8);
+                int numeros;
+                try {
+                    numeros = Integer.parseInt(numerosStr);
+                    if (Character.isLetter(letra.charAt(0))) {
+                        letra = letra.toUpperCase();
+                        int resto = numeros % 23;
+                        switch (resto) {
+                            case 0:
+                                if (!letra.equals("T")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 1:
+                                if (!letra.equals("R")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 2:
+                                if (!letra.equals("W")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 3:
+                                if (!letra.equals("A")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 4:
+                                if (!letra.equals("G")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 5:
+                                if (!letra.equals("M")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 6:
+                                if (!letra.equals("Y")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 7:
+                                if (!letra.equals("F")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 8:
+                                if (!letra.equals("P")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 9:
+                                if (!letra.equals("D")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 10:
+                                if (!letra.equals("X")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 11:
+                                if (!letra.equals("B")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 12:
+                                if (!letra.equals("N")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 13:
+                                if (!letra.equals("J")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 14:
+                                if (!letra.equals("Z")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 15:
+                                if (!letra.equals("S")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 16:
+                                if (!letra.equals("Q")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 17:
+                                if (!letra.equals("V")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 18:
+                                if (!letra.equals("H")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 19:
+                                if (!letra.equals("L")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 20:
+                                if (!letra.equals("C")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 21:
+                                if (!letra.equals("K")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            case 22:
+                                if (!letra.equals("E")) {
+                                    System.out.println("El DNI introducido es falso");
+                                    dni = null;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        System.out.println("Formato del DNI incorrecto");
+                        dni = null;
+                    }
+                } catch (NumberFormatException nfex) {
+                    System.out.println("Formato del DNI incorrecto");
+                    dni = null;
+                }
+            } else {
+                System.out.println("Tamaño del DNI erróneo");
+                dni = null;
+            }
+        }
+        return dni;
+    }
+
+
+    public static void escribirArrayListEnFichero(ArrayList<Usuario> usuarios, File fich) throws IOException {
+        if (fich.exists()) {
+            BufferedWriter bw2 = new BufferedWriter(new FileWriter(fich));
+            for (int i = 0; i < usuarios.size(); i++) {
+                bw2.write(usuarios.get(i).getNombre()+","+usuarios.get(i).getDni()+","+usuarios.get(i).getcPost()+","+usuarios.get(i).getFechaN()+","+usuarios.get(i).getCorreo()+","+usuarios.get(i).getTlf());
+            }
+        }
+    }
 }

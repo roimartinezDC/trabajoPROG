@@ -4,13 +4,13 @@ public class Usuario {
     private String nombre;
     private String dni;
     private int cPost;
-    private int fechaN;
+    private String fechaN;
     private String correo;
     private int tlf;
 
     public Usuario() {
     }
-    public Usuario(String nombre, String dni, int cPost, int fechaN, String correo, int tlf) {
+    public Usuario(String nombre, String dni, int cPost, String fechaN, String correo, int tlf) {
         this.nombre = nombre;
         this.dni = dni;
         this.cPost = cPost;
@@ -42,10 +42,10 @@ public class Usuario {
         this.cPost = cPost;
     }
 
-    public int getFechaN() {
+    public String getFechaN() {
         return fechaN;
     }
-    public void setFechaN(int fechaN) {
+    public void setFechaN(String fechaN) {
         this.fechaN = fechaN;
     }
 
