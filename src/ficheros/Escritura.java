@@ -8,36 +8,35 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Escritura {
-    PrintWriter pw;
-    FileWriter fw;
+    private static void escribirArrayListEnFichero(ArrayList<Usuario> usuarios, File fich) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fich));
+        for (int i = 0; i < usuarios.size(); i++) {
+            bw.write(usuarios.get(i).getNombre()+","+usuarios.get(i).getDni()+","+usuarios.get(i).getcPost()+","+usuarios.get(i).getFechaN()+","+usuarios.get(i).getCorreo()+","+usuarios.get(i).getTlf()+"\n");
+        }
+        bw.close();
+    }
+
     public void añadirUsuario(ArrayList<Usuario> usuarios, File fich) throws IOException {
         try {
             Lectura.vertirFicheroEnArrayList(usuarios, fich);
 
             String nombre = Llamar.lerString("Nombre:");
             String dni = pedirDNI();
-            int cPostal = pedircPostal();
+            int cPostal = pedircPostal("Código Postal:");
             String fNac = pedirFNac();
-            String correo = pedirCorreo();
-            int tlf = pedirTlf();
+            String correo = pedirCorreo("Correo electrónico:");
+            int tlf = pedirTlf("Nº de teléfono (opcional) \nPulsar enter para omitir");
 
             usuarios.add(new Usuario(nombre, dni, cPostal, fNac, correo, tlf));
 
-            fw = new FileWriter(fich, true);
-            pw = new PrintWriter(fw);
-            for (int i = 0; i < usuarios.size(); i++) {
-                pw.println(usuarios.get(i).getNombre()+","+usuarios.get(i).getDni()+","+usuarios.get(i).getcPost()+","+usuarios.get(i).getFechaN()+","+usuarios.get(i).getCorreo()+","+usuarios.get(i).getTlf());
-            }
+            escribirArrayListEnFichero(usuarios, fich);
 
         } catch (FileNotFoundException ex) {
             System.out.println("error1.1: "+ex.toString());
-        } finally {
-            fw.close();
-            pw.close();
         }
     }
 
-    public static void eliminar(ArrayList<Usuario> usuarios, File nombreFichero,String DNI) {
+    public static void eliminar(ArrayList<Usuario> usuarios, File nombreFichero,String DNI) throws IOException {
         try {
             Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
 
@@ -47,29 +46,32 @@ public class Escritura {
                     i = i - 1;
                 }
             }
+
+            Escritura.escribirArrayListEnFichero(usuarios, nombreFichero);
+
         } catch (FileNotFoundException e) {
             System.out.println("fichero no encontrado" + e.toString());
         }
     }
 
-    public static void modificar(ArrayList<Usuario> usuarios, File nombreFichero, String DNI) {
+    public static void modificar(ArrayList<Usuario> usuarios, File nombreFichero, String DNI) throws IOException {
         try {
             Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
             for (int i = 0; i < usuarios.size(); i++) {
                 if (usuarios.get(i).getDni().equals(DNI)) {
                     int opcion;
-                    opcion = Llamar.lerInt("MENU \n1.Correo \n2.Codigo postal \n3.Telefono \n4. Atrás");
+                    opcion = Llamar.lerInt("MENU \n1. Correo \n2. Código postal \n3. Teléfono \n4. Atrás");
                     switch (opcion) {
                         case 1:
-                            String nuevo_Correo = pedirCorreo();
+                            String nuevo_Correo = pedirCorreo("Introduzca el nuevo correo:");
                             usuarios.get(i).setCorreo(nuevo_Correo);
                             break;
                         case 2:
-                            int nuevo_CodigoPostal = pedircPostal();
+                            int nuevo_CodigoPostal = pedircPostal("Introduzca el nuevo código postal:");
                             usuarios.get(i).setcPost(nuevo_CodigoPostal);
                             break;
                         case 3:
-                            int nuevo_Telefono = pedirTlf();
+                            int nuevo_Telefono = pedirTlf("Introduzca nuevo nº de teléfono:");
                             usuarios.get(i).setTlf(nuevo_Telefono);
                             break;
                         default:
@@ -77,18 +79,20 @@ public class Escritura {
                     }
                     break;
                 }
-
             }
+
+            Escritura.escribirArrayListEnFichero(usuarios, nombreFichero);
+
         } catch (FileNotFoundException e) {
             System.out.println("error (fichero no encontrado)"+e.toString());
         }
     }
 
-    private static int pedirTlf() {
+    private static int pedirTlf(String mensaje) {
         String tlf = null;
         while (tlf == null) {
             try {
-                tlf = String.valueOf(Llamar.lerString("Nº de teléfono (opcional) \nPulsar enter para omitir"));
+                tlf = String.valueOf(Llamar.lerString(mensaje));
                 int ntlf = Integer.parseInt(tlf);
                 if (tlf.length() == 9) {
                     if (tlf.startsWith("6") || tlf.startsWith("9")) {
@@ -113,10 +117,10 @@ public class Escritura {
         }
         return Integer.parseInt(tlf);
     }
-    private static String pedirCorreo() {
+    private static String pedirCorreo(String mensaje) {
         String correo = null;
         while (correo == null) {
-            correo = Llamar.lerString("Correo electrónico:");
+            correo = Llamar.lerString(mensaje);
             if (correo.contains("@")) {
                 //validar que no tiene más de 1 "@"
                 int contA = 0;
@@ -243,11 +247,11 @@ public class Escritura {
         String fecha = dia+"/"+mes+"/"+anho;
         return fecha;
     }
-    private static int pedircPostal() {
+    private static int pedircPostal(String mensaje) {
         int cPostal = 0;
         while (cPostal == 0) {
             try {
-                cPostal = Llamar.lerInt("Código Postal:");
+                cPostal = Llamar.lerInt(mensaje);
                 if (String.valueOf(cPostal).length() != 5) {
                     System.out.println("Tamaño del c.postal incorrecto");
                     cPostal = 0;

@@ -6,6 +6,7 @@ import trabajoPROG.Usuario;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -42,7 +43,7 @@ public class Lectura {
         }
     }
 
-    public void buscar(ArrayList<Usuario> usuarios, File nombreFichero) throws FileNotFoundException {
+    public void buscar(ArrayList<Usuario> usuarios, File nombreFichero) throws IOException {
         vertirFicheroEnArrayList(usuarios, nombreFichero);
         String DNI= Llamar.lerString("DNI a buscar");
         boolean encontrado = false;
