@@ -1,6 +1,6 @@
 package trabajoPROG;
 
-public class Usuario {
+public class Usuario implements Comparable {
     private String nombre;
     private String dni;
     private int cPost;
@@ -51,4 +51,28 @@ public class Usuario {
     public void setTlf(int tlf) {
         this.tlf = tlf;
     }
+
+
+    @Override
+    public int compareTo(Object o) {
+        Usuario us1=(Usuario) o;
+        if(this.nombre.compareToIgnoreCase(us1.nombre)>0)
+            return 1;
+        else if(this.nombre.compareToIgnoreCase(us1.nombre)<0)
+            return -1;
+        else
+            return 0;
+    }
+
+    public int compareTo2(Object o){
+        Usuario us1=(Usuario) o;
+        if(this.fechaN.compareToIgnoreCase(us1.fechaN)>0)
+            return 1;
+        else if(this.fechaN.compareToIgnoreCase(us1.fechaN)<0)
+            return -1;
+        else
+            return 0;
+    }
+
 }
+
