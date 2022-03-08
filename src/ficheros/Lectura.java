@@ -102,6 +102,13 @@ public class Lectura {
                     copia = usuarios.get(i);
                     usuarios.get(i).compareTo(usuarios.get(e));
                     copia = usuarios.get(e);
+                    System.out.println(usuarios.get(e).getNombre());
+                    System.out.println(usuarios.get(e).getDni());
+                    System.out.println(usuarios.get(e).getcPost());
+                    System.out.println(usuarios.get(e).getCorreo());
+                    System.out.println(usuarios.get(e).getFechaN());
+                    System.out.println(usuarios.get(e).getTlf());
+                    System.out.println();
                 }
             }
         }
