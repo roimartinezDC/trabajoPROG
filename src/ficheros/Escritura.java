@@ -49,6 +49,8 @@ public class Escritura {
 
             Escritura.escribirArrayListEnFichero(usuarios, nombreFichero);
 
+            Llamar.amosar("Usuario eliminado");
+
         } catch (FileNotFoundException e) {
             System.out.println("fichero no encontrado" + e.toString());
         }

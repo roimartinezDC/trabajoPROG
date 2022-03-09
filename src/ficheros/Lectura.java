@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Lectura {
@@ -34,16 +35,35 @@ public class Lectura {
             ArrayList<Usuario> mayores = mayoresMenores[0];
             ArrayList<Usuario> menores = mayoresMenores[1];
 
-            System.out.println("MAYORES DE EDAD\n");
-            for (int i = 0; i < mayores.size(); i++) {
-                System.out.println(mayores.get(i).getNombre());
+            System.out.println();
+            if (mayores.size() > 0) {
+                System.out.println("MAYORES DE EDAD\n");
+                for (int i = 0; i < mayores.size(); i++) {
+                    System.out.printf("%-20.18s", mayores.get(i).getNombre());
+                    System.out.printf("%-12s", mayores.get(i).getDni());
+                    System.out.printf("%-12s", mayores.get(i).getFechaN());
+                    System.out.printf("%-8d", mayores.get(i).getcPost());
+                    System.out.printf("%-29.26s", mayores.get(i).getCorreo());
+                    if (mayores.get(i).getTlf() != 0)
+                        System.out.printf("%-11d", mayores.get(i).getTlf());
+                    System.out.println();
+                }
+                System.out.println("------------------------------------------------------------------------------------------------------------\n");
             }
-            System.out.println("\n-------------------------------------------------------------------------------\n");
-            System.out.println("MENORES DE EDAD\n");
-            for (int i = 0; i < menores.size(); i++) {
-                System.out.println(menores.get(i).getNombre());
+            if (menores.size() > 0) {
+                System.out.println("MENORES DE EDAD\n");
+                for (int i = 0; i < menores.size(); i++) {
+                    System.out.printf("%-20.18s", menores.get(i).getNombre());
+                    System.out.printf("%-12s", menores.get(i).getDni());
+                    System.out.printf("%-12s", menores.get(i).getFechaN());
+                    System.out.printf("%-8d", menores.get(i).getcPost());
+                    System.out.printf("%-29.26s", menores.get(i).getCorreo());
+                    if (menores.get(i).getTlf() != 0)
+                        System.out.printf("%-11d", menores.get(i).getTlf());
+                    System.out.println();
+                }
+                System.out.println("------------------------------------------------------------------------------------------------------------\n");
             }
-
 
         } catch (FileNotFoundException ex) {
             System.out.println("error (Ficheiro non atopado)" + ex.toString());
@@ -77,33 +97,52 @@ public class Lectura {
     public void buscar(ArrayList<Usuario> usuarios, File nombreFichero) throws IOException {
         vertirFicheroEnArrayList(usuarios, nombreFichero);
         String DNI = Llamar.lerString("DNI a buscar");
+        String nombre = null;
         boolean encontrado = false;
         for (int i = 0; i < usuarios.size(); i++) {
             if (usuarios.get(i).getDni().equals(DNI)) {
+                nombre = usuarios.get(i).getNombre();
                 encontrado = true;
                 break;
             }
         }
         if (encontrado == true) {
-            int opcion;
-            opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU \n1. Modificar  \n2. Eliminar \n3. Atrás"));
-            switch (opcion) {
-                case 1:
-                    Escritura.modificar(usuarios, nombreFichero, DNI);
-                    break;
-                case 2:
-                    Escritura.eliminar(usuarios, nombreFichero, DNI);
-                    break;
-                default:
-                    break;
+            int opcion = 0;
+            while (opcion != 4) {
+                opcion = Integer.parseInt(JOptionPane.showInputDialog(nombre.toUpperCase()+" - "+DNI+"\n1. Mostrar datos \n2. Modificar  \n3. Eliminar \n4. Atrás"));
+                switch (opcion) {
+                    case 1:
+                        for (int i = 0; i < usuarios.size(); i++) {
+                            if (usuarios.get(i).getDni().equals(DNI)) {
+                                System.out.println();
+                                System.out.printf("%-20.18s", usuarios.get(i).getNombre());
+                                System.out.printf("%-12s", usuarios.get(i).getDni());
+                                System.out.printf("%-12s", usuarios.get(i).getFechaN());
+                                System.out.printf("%-8d", usuarios.get(i).getcPost());
+                                System.out.printf("%-29.26s", usuarios.get(i).getCorreo());
+                                if (usuarios.get(i).getTlf() != 0)
+                                    System.out.printf("%-11d", usuarios.get(i).getTlf());
+                                System.out.println("\n------------------------------------------------------------------------------------------------------------\n");
+                                break;
+                            }
+                        }
+                        break;
+                    case 2:
+                        Escritura.modificar(usuarios, nombreFichero, DNI);
+                        break;
+                    case 3:
+                        Escritura.eliminar(usuarios, nombreFichero, DNI);
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        break;
+                }
             }
+
         } else {
             System.out.println("Usuario no encontrado");
         }
 
     }
-
-
-
-
 }
