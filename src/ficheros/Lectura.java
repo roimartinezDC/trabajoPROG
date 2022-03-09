@@ -108,7 +108,7 @@ public class Lectura {
         }
         if (encontrado == true) {
             int opcion = 0;
-            while (opcion != 4) {
+            while (opcion != 4 || opcion != 3) {
                 opcion = Integer.parseInt(JOptionPane.showInputDialog(nombre.toUpperCase()+" - "+DNI+"\n1. Mostrar datos \n2. Modificar  \n3. Eliminar \n4. Atrás"));
                 switch (opcion) {
                     case 1:
