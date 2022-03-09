@@ -95,9 +95,8 @@ public class Escritura {
         while (tlf == null) {
             try {
                 tlf = String.valueOf(Llamar.lerString(mensaje));
-                int ntlf = Integer.parseInt(tlf);
                 if (tlf.length() == 9) {
-                    if (tlf.startsWith("6") || tlf.startsWith("9")) {
+                    if (tlf.startsWith("6") || tlf.startsWith("9") || tlf.startsWith("7")) {
                     } else {
                         System.out.println("Formato del nª de teléfono erróneo");
                         tlf = null;
