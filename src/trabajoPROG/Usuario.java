@@ -1,5 +1,7 @@
 package trabajoPROG;
 
+import java.time.LocalDate;
+
 public class Usuario implements Comparable {
     private String nombre;
     private String dni;
@@ -52,6 +54,31 @@ public class Usuario implements Comparable {
         this.tlf = tlf;
     }
 
+    public int obtenerEdad(){
+        int edad = 0;
+        String fechaA = String.valueOf(LocalDate.now());
+        String[] fechaNac = fechaN.split("\\/");
+        String[] fechaAct = fechaA.split("\\-");
+
+        if (Integer.parseInt(fechaAct[0])-Integer.parseInt(fechaNac[2]) < 18) {
+            edad = Integer.parseInt(fechaAct[0])-Integer.parseInt(fechaNac[2]);
+        } else if (Integer.parseInt(fechaAct[0])-Integer.parseInt(fechaNac[2]) > 18) {
+            edad = Integer.parseInt(fechaAct[0])-Integer.parseInt(fechaNac[2]);
+        } else {
+            if (Integer.parseInt(fechaAct[1]) > Integer.parseInt(fechaNac[1])) {
+                edad = 18;
+            } else if (Integer.parseInt(fechaAct[1]) < Integer.parseInt(fechaNac[1])) {
+                edad = 17;
+            } else {
+                if (Integer.parseInt(fechaAct[2]) > Integer.parseInt(fechaNac[0])) {
+                    edad = 18;
+                } else {
+                    edad = 17;
+                }
+            }
+        }
+        return edad;
+    }
 
     @Override
     public int compareTo(Object o) {
@@ -64,15 +91,7 @@ public class Usuario implements Comparable {
             return 0;
     }
 
-    public int compareTo2(Object o){
-        Usuario us1=(Usuario) o;
-        if(this.fechaN.compareToIgnoreCase(us1.fechaN)>0)
-            return 1;
-        else if(this.fechaN.compareToIgnoreCase(us1.fechaN)<0)
-            return -1;
-        else
-            return 0;
-    }
+
 
 }
 

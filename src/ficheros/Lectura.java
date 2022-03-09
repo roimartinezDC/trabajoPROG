@@ -27,44 +27,53 @@ public class Lectura {
     public void visualizar(ArrayList<Usuario> usuarios, File nombreFichero) {
         try {
             Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
-            int opcion;
-            opcion = Llamar.lerInt("MENU \n1.Visualizar sin ordenar \n2.Ordenar \n3.Visualizar mayores y menores de edad");
-            switch (opcion) {
-                case 1:
-                    Lectura.visulizarSinOrdenar(usuarios, nombreFichero);
-                    break;
-                case 2:
-                    Lectura.visulizarOrden(usuarios, nombreFichero);
-                    break;
-                case 3:
 
+            ordenarPorNombre(usuarios);
 
+            ArrayList<Usuario>[] mayoresMenores = separarMayoresYMenores(usuarios);
+            ArrayList<Usuario> mayores = mayoresMenores[0];
+            ArrayList<Usuario> menores = mayoresMenores[1];
+
+            System.out.println("MAYORES DE EDAD\n");
+            for (int i = 0; i < mayores.size(); i++) {
+                System.out.println(mayores.get(i).getNombre());
+            }
+            System.out.println("\n-------------------------------------------------------------------------------\n");
+            System.out.println("MENORES DE EDAD\n");
+            for (int i = 0; i < menores.size(); i++) {
+                System.out.println(menores.get(i).getNombre());
             }
 
+
         } catch (FileNotFoundException ex) {
-            System.out.println("erro (Ficheiro non atopado)" + ex.toString());
+            System.out.println("error (Ficheiro non atopado)" + ex.toString());
         }
     }
-
-    public static void visulizarSinOrdenar(ArrayList<Usuario> usuarios, File nombreFichero) {
-        try {
-            Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
-
-            for (int i = 0; i < usuarios.size(); i++) {
-
-                System.out.println(usuarios.get(i).getNombre());
-                System.out.println(usuarios.get(i).getDni());
-                System.out.println(usuarios.get(i).getcPost());
-                System.out.println(usuarios.get(i).getCorreo());
-                System.out.println(usuarios.get(i).getFechaN());
-                System.out.println(usuarios.get(i).getTlf());
-                System.out.println();
+    private ArrayList<Usuario>[] separarMayoresYMenores(ArrayList<Usuario> usuarios) {
+        ArrayList<Usuario>[] mayoresMenores = new ArrayList[2];
+        mayoresMenores[0] = new ArrayList<>();
+        mayoresMenores[1] = new ArrayList<>();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).obtenerEdad() >= 18) {
+                mayoresMenores[0].add(usuarios.get(i));
+            } else {
+                mayoresMenores[1].add(usuarios.get(i));
             }
-        } catch (FileNotFoundException ex) {
-            System.out.println("erro " + ex.toString());
+        }
+        return  mayoresMenores;
+    }
+    private void ordenarPorNombre(ArrayList<Usuario> usuarios) {
+        Usuario copia;
+        for (int i = 0; i < usuarios.size(); i++) {
+            for (int e = i; e < usuarios.size(); e++) {
+                if (usuarios.get(i).compareTo(usuarios.get(e)) > 0) {
+                    copia = usuarios.get(i);
+                    usuarios.set(i, usuarios.get(e));
+                    usuarios.set(e, copia);
+                }
+            }
         }
     }
-
     public void buscar(ArrayList<Usuario> usuarios, File nombreFichero) throws IOException {
         vertirFicheroEnArrayList(usuarios, nombreFichero);
         String DNI = Llamar.lerString("DNI a buscar");
@@ -94,25 +103,7 @@ public class Lectura {
 
     }
 
-    public static void visulizarOrden(ArrayList<Usuario> usuarios, File nombreFichero) {
-        Usuario copia;
-        for (int i = 0; i < usuarios.size(); i++) {
-            for (int e = 0; e < usuarios.size(); e++) {
-                if (usuarios.get(i).compareTo(usuarios.get(e)) > 0) {
-                    copia = usuarios.get(i);
-                    usuarios.get(i).compareTo(usuarios.get(e));
-                    copia = usuarios.get(e);
-                    System.out.println(usuarios.get(e).getNombre());
-                    System.out.println(usuarios.get(e).getDni());
-                    System.out.println(usuarios.get(e).getcPost());
-                    System.out.println(usuarios.get(e).getCorreo());
-                    System.out.println(usuarios.get(e).getFechaN());
-                    System.out.println(usuarios.get(e).getTlf());
-                    System.out.println();
-                }
-            }
-        }
-    }
+
 
 
 }
