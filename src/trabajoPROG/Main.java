@@ -14,9 +14,13 @@ public class Main {
         Lectura lector=new Lectura();
         ArrayList<Usuario> usuarios = new ArrayList<>();
         File fich = new File(".\\fichero.txt");
-        int opcion;
+        int opcion = 0;
         do {
-            opcion = Integer.parseInt(JOptionPane.showInputDialog("GESTOR DE USUARIOS \n1. Añadir Nuevo Usuario  \n2. Mostrar Usuarios \n3. Buscar Usuario  \n4. Salir"));
+            try {
+                opcion = Integer.parseInt(JOptionPane.showInputDialog("GESTOR DE USUARIOS \n1. Añadir Nuevo Usuario  \n2. Mostrar Usuarios \n3. Buscar Usuario  \n4. Salir"));
+            } catch (NumberFormatException ex) {
+                System.out.println("error6: "+ex.toString());
+            }
             switch (opcion) {
                 case 1:
                     escritor.añadirUsuario(usuarios, fich);

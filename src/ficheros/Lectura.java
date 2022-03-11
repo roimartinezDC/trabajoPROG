@@ -31,7 +31,11 @@ public class Lectura {
 
             int var = 0;
             while (var != 4) {
-                var = Llamar.lerInt("1. Filtrar por Nombre \n2. Filtrar por DNI \n3. Filtrar por Edad \n4. Volver");
+                try {
+                    var = Llamar.lerInt("1. Filtrar por Nombre \n2. Filtrar por DNI \n3. Filtrar por Edad \n4. Volver");
+                } catch (NumberFormatException ex) {
+                    System.out.println("error6: "+ex.toString());
+                }
                 switch (var) {
                     case 1:
                         ordenarPorNombre(usuarios);
@@ -152,7 +156,11 @@ public class Lectura {
         if (encontrado == true) {
             int opcion = 0;
             while (opcion != 4 && opcion != 3) {
-                opcion = Integer.parseInt(JOptionPane.showInputDialog(nombre.toUpperCase()+" - "+DNI+"\n1. Mostrar datos \n2. Modificar  \n3. Eliminar \n4. Atrás"));
+                try {
+                    opcion = Integer.parseInt(JOptionPane.showInputDialog(nombre.toUpperCase()+" - "+DNI+"\n1. Mostrar datos \n2. Modificar  \n3. Eliminar \n4. Atrás"));
+                } catch (NumberFormatException ex) {
+                    System.out.println("error6: "+ex.toString());
+                }
                 switch (opcion) {
                     case 1:
                         for (int i = 0; i < usuarios.size(); i++) {
