@@ -29,40 +29,59 @@ public class Lectura {
         try {
             Lectura.vertirFicheroEnArrayList(usuarios, nombreFichero);
 
-            ordenarPorNombre(usuarios);
-
-            ArrayList<Usuario>[] mayoresMenores = separarMayoresYMenores(usuarios);
-            ArrayList<Usuario> mayores = mayoresMenores[0];
-            ArrayList<Usuario> menores = mayoresMenores[1];
-
-            System.out.println();
-            if (mayores.size() > 0) {
-                System.out.println("MAYORES DE EDAD\n");
-                for (int i = 0; i < mayores.size(); i++) {
-                    System.out.printf("%-20.18s", mayores.get(i).getNombre());
-                    System.out.printf("%-12s", mayores.get(i).getDni());
-                    System.out.printf("%-12s", mayores.get(i).getFechaN());
-                    System.out.printf("%-8d", mayores.get(i).getcPost());
-                    System.out.printf("%-29.26s", mayores.get(i).getCorreo());
-                    if (mayores.get(i).getTlf() != 0)
-                        System.out.printf("%-11d", mayores.get(i).getTlf());
-                    System.out.println();
+            int var = 0;
+            while (var != 4) {
+                var = Llamar.lerInt("1. Filtrar por Nombre \n2. Filtrar por DNI \n3. Filtrar por Edad \n4. Volver");
+                switch (var) {
+                    case 1:
+                        ordenarPorNombre(usuarios);
+                        break;
+                    case 2:
+                        ordenarPorNIF(usuarios);
+                        break;
+                    case 3:
+                        ordenarPorFechaN(usuarios);
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        break;
                 }
-                System.out.println("------------------------------------------------------------------------------------------------------------\n");
-            }
-            if (menores.size() > 0) {
-                System.out.println("MENORES DE EDAD\n");
-                for (int i = 0; i < menores.size(); i++) {
-                    System.out.printf("%-20.18s", menores.get(i).getNombre());
-                    System.out.printf("%-12s", menores.get(i).getDni());
-                    System.out.printf("%-12s", menores.get(i).getFechaN());
-                    System.out.printf("%-8d", menores.get(i).getcPost());
-                    System.out.printf("%-29.26s", menores.get(i).getCorreo());
-                    if (menores.get(i).getTlf() != 0)
-                        System.out.printf("%-11d", menores.get(i).getTlf());
+                if (var != 4) {
+                    ArrayList<Usuario>[] mayoresMenores = separarMayoresYMenores(usuarios);
+                    ArrayList<Usuario> mayores = mayoresMenores[0];
+                    ArrayList<Usuario> menores = mayoresMenores[1];
+
                     System.out.println();
+                    if (mayores.size() > 0) {
+                        System.out.println("MAYORES DE EDAD\n");
+                        for (int i = 0; i < mayores.size(); i++) {
+                            System.out.printf("%-20.18s", mayores.get(i).getNombre());
+                            System.out.printf("%-12s", mayores.get(i).getDni());
+                            System.out.printf("%-12s", mayores.get(i).getFechaN());
+                            System.out.printf("%-8d", mayores.get(i).getcPost());
+                            System.out.printf("%-29.26s", mayores.get(i).getCorreo());
+                            if (mayores.get(i).getTlf() != 0)
+                                System.out.printf("%-11d", mayores.get(i).getTlf());
+                            System.out.println();
+                        }
+                        System.out.println("------------------------------------------------------------------------------------------------------------\n");
+                    }
+                    if (menores.size() > 0) {
+                        System.out.println("MENORES DE EDAD\n");
+                        for (int i = 0; i < menores.size(); i++) {
+                            System.out.printf("%-20.18s", menores.get(i).getNombre());
+                            System.out.printf("%-12s", menores.get(i).getDni());
+                            System.out.printf("%-12s", menores.get(i).getFechaN());
+                            System.out.printf("%-8d", menores.get(i).getcPost());
+                            System.out.printf("%-29.26s", menores.get(i).getCorreo());
+                            if (menores.get(i).getTlf() != 0)
+                                System.out.printf("%-11d", menores.get(i).getTlf());
+                            System.out.println();
+                        }
+                        System.out.println("------------------------------------------------------------------------------------------------------------\n");
+                    }
                 }
-                System.out.println("------------------------------------------------------------------------------------------------------------\n");
             }
 
         } catch (FileNotFoundException ex) {
@@ -94,6 +113,30 @@ public class Lectura {
             }
         }
     }
+    private void ordenarPorFechaN(ArrayList<Usuario> usuarios) {
+        Usuario copia;
+        for (int i = 0; i < usuarios.size(); i++) {
+            for (int e = i; e < usuarios.size(); e++) {
+                if (usuarios.get(i).compareToByDate(usuarios.get(e)) > 0) {
+                    copia = usuarios.get(i);
+                    usuarios.set(i, usuarios.get(e));
+                    usuarios.set(e, copia);
+                }
+            }
+        }
+    }
+    private void ordenarPorNIF(ArrayList<Usuario> usuarios) {
+        Usuario copia;
+        for (int i = 0; i < usuarios.size(); i++) {
+            for (int e = i; e < usuarios.size(); e++) {
+                if (usuarios.get(i).compareToByID(usuarios.get(e)) > 0) {
+                    copia = usuarios.get(i);
+                    usuarios.set(i, usuarios.get(e));
+                    usuarios.set(e, copia);
+                }
+            }
+        }
+    }
     public void buscar(ArrayList<Usuario> usuarios, File nombreFichero) throws IOException {
         vertirFicheroEnArrayList(usuarios, nombreFichero);
         String DNI = Llamar.lerString("DNI a buscar");
@@ -108,7 +151,7 @@ public class Lectura {
         }
         if (encontrado == true) {
             int opcion = 0;
-            while (opcion != 4 || opcion != 3) {
+            while (opcion != 4 && opcion != 3) {
                 opcion = Integer.parseInt(JOptionPane.showInputDialog(nombre.toUpperCase()+" - "+DNI+"\n1. Mostrar datos \n2. Modificar  \n3. Eliminar \n4. Atrás"));
                 switch (opcion) {
                     case 1:

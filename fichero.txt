@@ -1,4 +1,4 @@
 Yago,36104894T,36330,14/3/2003,yagsimfer@gmail.com,0
 Roi,35608360J,36474,14/7/2003,roimartinezroque@gmail.com,622366602
 Nerea,23465456T,76546,10/3/2004,ner@g.com,678999342
-Alvaro,12345678K,32456,12/3/2005,@.es,0
+Zar,12345678Z,12345,1/1/2000,zar@gmail.es,0

@@ -80,6 +80,41 @@ public class Usuario implements Comparable {
         return edad;
     }
 
+    public int compareToByID(Object o) {
+        Usuario usr = (Usuario) o;
+        if (dni.compareToIgnoreCase(usr.dni) > 0) {
+            return 1;
+        } else if (dni.compareToIgnoreCase(usr.dni) < 0) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+    public int compareToByDate(Object o) {
+        Usuario usr = (Usuario) o;
+        String[] thisFecha = this.fechaN.split("\\/");
+        String[] compareFecha = usr.fechaN.split("\\/");
+        if (Integer.parseInt(thisFecha[2]) > Integer.parseInt(compareFecha[2])) {
+            return 1;
+        } else if (Integer.parseInt(thisFecha[2]) < Integer.parseInt(compareFecha[2])) {
+            return -1;
+        } else {
+            if (Integer.parseInt(thisFecha[1]) > Integer.parseInt(compareFecha[1])) {
+                return 1;
+            } else if (Integer.parseInt(thisFecha[1]) < Integer.parseInt(compareFecha[1])) {
+                return -1;
+            } else {
+                if (Integer.parseInt(thisFecha[0]) > Integer.parseInt(compareFecha[0])) {
+                    return 1;
+                } else if (Integer.parseInt(thisFecha[0]) < Integer.parseInt(compareFecha[0])) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        }
+    }
+
     @Override
     public int compareTo(Object o) {
         Usuario us1=(Usuario) o;

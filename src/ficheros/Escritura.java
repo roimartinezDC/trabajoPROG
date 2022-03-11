@@ -102,8 +102,13 @@ public class Escritura {
                         tlf = null;
                     }
                 } else {
-                    System.out.println("Tamaño del nº de teléfono incorrecto");
-                    tlf = null;
+                    if (tlf.length() == 0) {
+                        tlf = "0";
+                        break;
+                    } else {
+                        System.out.println("Tamaño del nº de teléfono incorrecto");
+                        tlf = null;
+                    }
                 }
             } catch (NumberFormatException ex) {
                 if (tlf.equals("")) {
